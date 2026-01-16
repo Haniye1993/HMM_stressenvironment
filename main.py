@@ -8,16 +8,13 @@ st.set_page_config(layout="wide")
 st.title("Hidden Markov Models Under Stress")
 st.subheader("Inference Failure Modes: Filtering vs Smoothing vs Viterbi")
 
-# =====================================================
 # Utility
-# =====================================================
+
 def entropy(p):
     p = np.clip(p, 1e-12, 1.0)
     return -np.sum(p * np.log(p), axis=1)
 
-# =====================================================
 # HMM MODEL (Inference-only, fixed parameters)
-# =====================================================
 class GaussianHMM:
     def __init__(self, pi, A, mus, sigmas):
         self.pi = np.array(pi)
@@ -44,9 +41,8 @@ class GaussianHMM:
 
         return states, obs
 
-# =====================================================
 # Inference Algorithms (LOG-SPACE)
-# =====================================================
+
 def forward_log(hmm, obs):
     T, K = len(obs), hmm.K
     log_alpha = np.zeros((T, K))
@@ -103,9 +99,7 @@ def viterbi_log(hmm, obs):
 
     return states
 
-# =====================================================
 # Experiment Runner
-# =====================================================
 def run_experiment(title, hmm, obs, true_states):
     st.header(title)
 
@@ -134,9 +128,7 @@ def run_experiment(title, hmm, obs, true_states):
     ax.grid(True)
     st.pyplot(fig)
 
-# =====================================================
 # STRESS REGIMES
-# =====================================================
 np.random.seed(0)
 T = 40
 
